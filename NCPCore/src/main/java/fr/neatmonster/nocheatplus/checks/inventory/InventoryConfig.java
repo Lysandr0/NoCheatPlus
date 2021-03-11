@@ -20,11 +20,17 @@ import java.util.Set;
 import org.bukkit.Material;
 
 import fr.neatmonster.nocheatplus.actions.ActionList;
+import fr.neatmonster.nocheatplus.checks.CheckType;
 import fr.neatmonster.nocheatplus.checks.access.ACheckConfig;
 import fr.neatmonster.nocheatplus.config.ConfPaths;
 import fr.neatmonster.nocheatplus.config.ConfigFile;
 import fr.neatmonster.nocheatplus.permissions.Permissions;
 import fr.neatmonster.nocheatplus.worlds.IWorldData;
+import fr.neatmonster.nocheatplus.compat.versions.ServerVersion;
+import fr.neatmonster.nocheatplus.NCPAPIProvider;
+import fr.neatmonster.nocheatplus.components.config.value.OverrideType;
+import fr.neatmonster.nocheatplus.compat.AlmostBoolean;
+
 
 /**
  * Configurations specific for the "inventory" checks. Every world gets one of
@@ -94,7 +100,11 @@ public class InventoryConfig extends ACheckConfig {
         data.readStringlFromList(ConfPaths.INVENTORY_FASTCLICK_EXCLUDE, inventoryExemptions);
         fastClickImprobableWeight = (float) data.getDouble(ConfPaths.INVENTORY_FASTCLICK_IMPROBABLE_WEIGHT);
         fastClickActions = data.getOptimizedActionList(ConfPaths.INVENTORY_FASTCLICK_ACTIONS, Permissions.INVENTORY_FASTCLICK);
-
+        
+        if (ServerVersion.compareMinecraftVersion("1.9") >= 0 ) {
+             NCPAPIProvider.getNoCheatPlusAPI().getWorldDataManager().overrideCheckActivation(CheckType.INVENTORY_FASTCONSUME, AlmostBoolean.NO, OverrideType.PERMANENT, true);
+        }
+        
         fastConsumeDuration = (long) (1000.0 * data.getDouble(ConfPaths.INVENTORY_FASTCONSUME_DURATION));
         fastConsumeWhitelist = data.getBoolean(ConfPaths.INVENTORY_FASTCONSUME_WHITELIST);
         data.readMaterialFromList(ConfPaths.INVENTORY_FASTCONSUME_ITEMS, fastConsumeItems);

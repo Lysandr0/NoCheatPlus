@@ -25,6 +25,7 @@ import fr.neatmonster.nocheatplus.config.ConfPaths;
 import fr.neatmonster.nocheatplus.config.ConfigFile;
 import fr.neatmonster.nocheatplus.permissions.Permissions;
 import fr.neatmonster.nocheatplus.worlds.IWorldData;
+import fr.neatmonster.nocheatplus.NCPAPIProvider;
 
 /**
  * Configurations specific for the "fight" checks. Every world gets one of these assigned to it, or if a world doesn't
@@ -123,9 +124,7 @@ public class FightConfig extends ACheckConfig {
         directionActions = config.getOptimizedActionList(ConfPaths.FIGHT_DIRECTION_ACTIONS, Permissions.FIGHT_DIRECTION);
 
         if (ServerVersion.compareMinecraftVersion("1.9") >= 0) {
-            worldData.overrideCheckActivation(CheckType.FIGHT_FASTHEAL, 
-                    AlmostBoolean.NO, OverrideType.PERMANENT, 
-                    true);
+            NCPAPIProvider.getNoCheatPlusAPI().getWorldDataManager().overrideCheckActivation(CheckType.FIGHT_FASTHEAL, AlmostBoolean.NO, OverrideType.PERMANENT, true);
         }
         fastHealInterval = config.getLong(ConfPaths.FIGHT_FASTHEAL_INTERVAL);
         fastHealBuffer = config.getLong(ConfPaths.FIGHT_FASTHEAL_BUFFER);

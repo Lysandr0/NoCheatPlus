@@ -1099,7 +1099,7 @@ public class NoCheatPlus extends JavaPlugin implements NoCheatPlusAPI {
      */
     private void logOtherNotes(ConfigFile config) {
         if (ServerVersion.compareMinecraftVersion("1.9") >= 0) {
-            logManager.info(Streams.INIT, "Force disable FastHeal on Minecraft 1.9 and later.");
+            logManager.info(Streams.INIT, "Force disable FastHeal and FastConsume on Minecraft 1.9 and later.");
         }
     }
 
